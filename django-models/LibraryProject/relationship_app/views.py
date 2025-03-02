@@ -6,7 +6,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponse
-
+from django.contrib.auth.decorators import login_required
 
 def register(request):
     if request.method == 'POST':
@@ -41,6 +41,7 @@ def is_admin(user):
     return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
 
 @user_passes_test(is_admin)
+@login_required
 def admin_view(request):
     return HttpResponse("Welcome, Admin!")
 
