@@ -2,13 +2,14 @@ from django.urls import path
 from .views import LibraryDetailView
 from .views import list_books
 from .views import register
-from .views import admin_view
-from .views import librarian_view
-from .views import member_view
 
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import views as auth_views
+
+from .admin_view import admin_view
+from .librarian_view import librarian_view
+from .member_view import member_view
 
 urlpatterns = [
     path('register/', register, name='register'),
