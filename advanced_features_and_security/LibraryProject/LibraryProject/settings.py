@@ -169,3 +169,5 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "your-secret-key")
 
 # Security: Restrict CORS origins if using API
 CORS_ALLOWED_ORIGINS = ["https://yourdomain.com"]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
