@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bookshelf',
-    'relationship_app'
+    'relationship_app',
+    'csp',
     
     # 'book_store.apps.BookStoreConfig',
 ]
@@ -51,7 +52,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "csp.middleware.CSPMiddleware",
+
 ]
+
+
+
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'")  # Modify for security
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'")
 
 ROOT_URLCONF = 'LibraryProject.urls'
 
@@ -130,3 +139,31 @@ LOGOUT_REDIRECT_URL = '/'
 AUTH_USER_MODEL = "bookshelf.CustomUser"
 # AUTH_USER_MODEL = "relationship_app.customuser"
 
+
+import os
+
+# Security: Disable debug mode in production
+DEBUG = False  # Set to False in production
+
+# Security: Define allowed hosts
+ALLOWED_HOSTS = ["yourdomain.com", "127.0.0.1"]
+
+# Security: Use HTTPS for cookies and CSRF protection
+CSRF_COOKIE_SECURE = True  # Ensures CSRF cookies are only sent over HTTPS
+SESSION_COOKIE_SECURE = True  # Ensures session cookies are only sent over HTTPS
+SECURE_BROWSER_XSS_FILTER = True  # Enables XSS protection in browsers
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevents content-type sniffing
+X_FRAME_OPTIONS = "DENY"  # Prevents clickjacking attacks
+
+# Security: CSP (Content Security Policy) - Restrict script sources to prevent XSS
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'")  # Adjust as needed
+
+# Security: Enforce HTTPS in production
+SECURE_SSL_REDIRECT = True  # Redirect all HTTP traffic to HTTPS
+
+# Security: Use a strong secret key (DO NOT hardcode in production)
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "your-secret-key")
+
+# Security: Restrict CORS origins if using API
+CORS_ALLOWED_ORIGINS = ["https://yourdomain.com"]
