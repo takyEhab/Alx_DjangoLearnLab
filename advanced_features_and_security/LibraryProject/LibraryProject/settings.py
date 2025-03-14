@@ -161,7 +161,9 @@ CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'")  # Adjust as needed
 
 # Security: Enforce HTTPS in production
 SECURE_SSL_REDIRECT = True  # Redirect all HTTP traffic to HTTPS
-
+SECURE_HSTS_SECONDS = 31536000  
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  
+SECURE_HSTS_PRELOAD = True
 # Security: Use a strong secret key (DO NOT hardcode in production)
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "your-secret-key")
 
